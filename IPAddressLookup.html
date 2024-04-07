@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IP Address Information Lookup</title>
     <style>
-        /* Add CSS styles here */
         body {
             font-family: Arial, sans-serif;
             background-color: #f3f4f6;
@@ -81,16 +80,13 @@
     </div>
 
     <script>
-        // JavaScript code to handle form submission and display IP information
         document.getElementById("lookupForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent form submission
+            event.preventDefault();
             var ipAddress = document.getElementById("ipAddress").value;
             
-            // Make an HTTP request to an IP geolocation API to get information about the IP address
             fetch("https://ipapi.co/" + ipAddress + "/json/")
             .then(response => response.json())
             .then(data => {
-                // Display IP information on the page
                 var ipInfo = `
                     <p><strong>IP Address:</strong> ${data.ip}</p>
                     <p><strong>Country:</strong> ${data.country_name}</p>
