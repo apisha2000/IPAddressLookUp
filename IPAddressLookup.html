@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Address Information Lookup</title>
+    <style>
+        /* Add CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 400px;
+            max-width: 90%;
+            text-align: center;
+        }
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #ipInfo {
+            background-color: #f7f7f7;
+            border-radius: 6px;
+            padding: 20px;
+            text-align: left;
+        }
+        #ipInfo p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IP Address Information Lookup</h1>
+        <form id="lookupForm">
+            <input type="text" id="ipAddress" placeholder="Enter IP Address">
+            <button type="submit">Lookup</button>
+        </form>
+        <div id="ipInfo"></div>
+    </div>
+
+    <script>
+        // JavaScript code to handle form submission and display IP information
+        document.getElementById("lookupForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+            var ipAddress = document.getElementById("ipAddress").value;
+            
+            // Make an HTTP request to an IP geolocation API to get information about the IP address
+            fetch("https://ipapi.co/" + ipAddress + "/json/")
+            .then(response => response.json())
+            .then(data => {
+                // Display IP information on the page
+                var ipInfo = `
+                    <p><strong>IP Address:</strong> ${data.ip}</p>
+                    <p><strong>Country:</strong> ${data.country_name}</p>
+                    <p><strong>Region:</strong> ${data.region}</p>
+                    <p><strong>City:</strong> ${data.city}</p>
+                    <p><strong>ISP:</strong> ${data.org}</p>
+                `;
+                document.getElementById("ipInfo").innerHTML = ipInfo;
+            })
+            .catch(error => {
+                console.error("Error retrieving IP information:", error);
+                document.getElementById("ipInfo").innerText = "Error retrieving IP information";
+            });
+        });
+    </script>
+</body>
+</html>
+
